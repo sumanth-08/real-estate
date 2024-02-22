@@ -2,11 +2,16 @@ import { Router } from "express";
 import { send, setErrorResponseMsg } from "../../helper/responseHelper.js";
 import RESPONSE from "../../configs/global.js";
 import accountsModel from "../../models/accountsModel.js";
-import { VERIFY_STATUS } from "../../configs/constants.js";
+import { ROLE, VERIFY_STATUS } from "../../configs/constants.js";
+import authenticate from "../../middlewares/authenticate.js";
 const router = Router();
 
-router.put("/", async (req, res) => {
+router.put("/", authenticate, async (req, res) => {
   try {
+    if (req.user.role != ROLE.ADMIN) {
+      return send(res, RESPONSE.NO_ACCESS);
+    }
+
     const vendor_id = req.query.vendor_id;
     const verify_status = req.body.verify_status;
     const updates = {};

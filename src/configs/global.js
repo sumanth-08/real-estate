@@ -19,6 +19,18 @@ const RESPONSE = {
     code: 204,
     message: "is already exist",
   },
+  NO_ACCESS: {
+    code: 205,
+    message: "You didn't have permission to access this API",
+  },
+  TOKEN_REQUIRED: {
+    code: 400,
+    message: "Authentication token is required",
+  },
+  INVALID_TOKEN: {
+    code: 401,
+    message: "Authentication token is invalid",
+  },
   UNKNOWN_ERROR: {
     code: 500,
     message: "Something went wrong!",

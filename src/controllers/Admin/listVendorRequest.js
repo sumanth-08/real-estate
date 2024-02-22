@@ -3,10 +3,14 @@ import { send } from "../../helper/responseHelper.js";
 import RESPONSE from "../../configs/global.js";
 import accountsModel from "../../models/accountsModel.js";
 import { CONTENT_STATE, ROLE } from "../../configs/constants.js";
+import authenticate from "../../middlewares/authenticate.js";
 const router = Router();
 
-router.get("/", async (req, res) => {
+router.get("/", authenticate, async (req, res) => {
   try {
+    if (req.user.role != ROLE.ADMIN) {
+      return send(res, RESPONSE.NO_ACCESS);
+    }
     let query = {};
     let filter = req.query.status;
     query.isactive = CONTENT_STATE.IS_ACTIVE;
