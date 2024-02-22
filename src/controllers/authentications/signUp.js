@@ -3,7 +3,12 @@ import { send, setErrorResponseMsg } from "../../helper/responseHelper.js";
 import RESPONSE from "../../configs/global.js";
 import accountsModel from "../../models/accountsModel.js";
 import bcrypt from "bcrypt";
-import { SALTROUND, ROLE, CONTENT_STATE } from "../../configs/constants.js";
+import {
+  SALTROUND,
+  ROLE,
+  CONTENT_STATE,
+  VERIFY_STATUS,
+} from "../../configs/constants.js";
 import jwtTokenCreation from "../../middlewares/jwtTokenCreation.js";
 const router = Router();
 
@@ -123,6 +128,8 @@ router.post("/", async (req, res) => {
       email: email,
       phone: phone,
       password: await bcrypt.hash(password, SALTROUND),
+      verify_status:
+        role == ROLE.VENDOR ? VERIFY_STATUS.PENDING : VERIFY_STATUS.APPROVED,
     });
 
     const token = await jwtTokenCreation(

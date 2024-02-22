@@ -25,6 +25,10 @@ const accountModel = mongoose.Schema({
     type: Number,
     default: 1,
   },
+  verify_status: {
+    type: Number,
+    required: true,
+  },
 });
 
 export default mongoose.model("accounts", accountModel);
