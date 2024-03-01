@@ -11,13 +11,32 @@ router.get("/", authenticate, async (req, res) => {
     if (req.user.role != ROLE.ADMIN) {
       return send(res, RESPONSE.NO_ACCESS);
     }
-    let query = {};
-    let filter = req.query.status;
-    query.isactive = CONTENT_STATE.IS_ACTIVE;
-    query.role = ROLE.VENDOR;
-    if (filter) query.verify_status = filter;
+    // let query = {};
+    let filter = parseInt(req.query.status);
+    // query.isactive = CONTENT_STATE.IS_ACTIVE;
+    // query.role = ROLE.VENDOR;
+    // if (filter) query.verify_status = filter;
 
-    let data = await accountsModel.find(query);
+    // let data = await accountsModel.find(query);
+
+    let pipeline = [];
+
+    pipeline.push({
+      $match: {
+        isactive: CONTENT_STATE.IS_ACTIVE,
+        role: ROLE.VENDOR,
+      },
+    });
+
+    if (filter) {
+      pipeline.push({
+        $match: {
+          verify_status: filter,
+        },
+      });
+    }
+
+    let data = await accountsModel.aggregate(pipeline).exec();
 
     data = data.map((itm) => ({
       vendor_id: itm._id,
