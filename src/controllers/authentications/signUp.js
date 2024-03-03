@@ -132,16 +132,19 @@ router.post("/", async (req, res) => {
         role == ROLE.VENDOR ? VERIFY_STATUS.PENDING : VERIFY_STATUS.APPROVED,
     });
 
-    const token = await jwtTokenCreation(
-      userData._id,
-      userData.role,
-      userData.email,
-      userData.phone
-    );
+    let token = null;
+    if (role != ROLE.VENDOR) {
+      token = await jwtTokenCreation(
+        userData._id,
+        userData.role,
+        userData.email,
+        userData.phone
+      );
+    }
 
     return send(res, RESPONSE.SUCCESS, {
       role: userData.role,
-      access_token: token,
+      access_token: token ?? "Account need to verify",
     });
   } catch (err) {
     console.log(err.message);
