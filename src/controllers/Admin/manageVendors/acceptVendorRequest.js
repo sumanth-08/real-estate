@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { send, setErrorResponseMsg } from "../../helper/responseHelper.js";
-import RESPONSE from "../../configs/global.js";
-import accountsModel from "../../models/accountsModel.js";
-import { ROLE, VERIFY_STATUS } from "../../configs/constants.js";
-import authenticate from "../../middlewares/authenticate.js";
+import { send, setErrorResponseMsg } from "../../../helper/responseHelper.js";
+import RESPONSE from "../../../configs/global.js";
+import accountsModel from "../../../models/accountsModel.js";
+import { ROLE, VERIFY_STATUS } from "../../../configs/constants.js";
+import authenticate from "../../../middlewares/authenticate.js";
 const router = Router();
 
 router.put("/", authenticate, async (req, res) => {
