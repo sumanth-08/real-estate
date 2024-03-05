@@ -2,7 +2,7 @@ import { Router } from "express";
 import { send, setErrorResponseMsg } from "../../../helper/responseHelper.js";
 import RESPONSE from "../../../configs/global.js";
 import categoryModel from "../../../models/categoryModel.js";
-import { CONTENT_STATE } from "../../../configs/constants.js";
+import constants from "../../../configs/constants.js";
 const router = Router();
 
 router.get("/", async (req, res) => {
@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
     let data = await categoryModel.aggregate([
       {
         $match: {
-          isactive: CONTENT_STATE.IS_ACTIVE,
+          isactive: constants.CONTENT_STATE.IS_ACTIVE,
         },
       },
     ]);

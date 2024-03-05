@@ -2,7 +2,7 @@ import { Router } from "express";
 import { send, setErrorResponseMsg } from "../../../helper/responseHelper.js";
 import RESPONSE from "../../../configs/global.js";
 import accountsModel from "../../../models/accountsModel.js";
-import { ROLE, VERIFY_STATUS } from "../../../configs/constants.js";
+import constants from "../../../configs/constants.js";
 import authenticate from "../../../middlewares/authenticate.js";
 const router = Router();
 
@@ -25,8 +25,8 @@ router.put("/", authenticate, async (req, res) => {
     }
 
     if (
-      verify_status == VERIFY_STATUS.APPROVED ||
-      verify_status == VERIFY_STATUS.REJECTED
+      verify_status == constants.VERIFY_STATUS.APPROVED ||
+      verify_status == constants.VERIFY_STATUS.REJECTED
     )
       updates.verify_status = verify_status;
 

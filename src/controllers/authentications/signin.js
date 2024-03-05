@@ -3,7 +3,7 @@ import { send, setErrorResponseMsg } from "../../helper/responseHelper.js";
 import RESPONSE from "../../configs/global.js";
 import accountsModel from "../../models/accountsModel.js";
 import bcrypt from "bcrypt";
-import { CONTENT_STATE, VERIFY_STATUS } from "../../configs/constants.js";
+import constants from "../../configs/constants.js";
 import jwtTokenCreation from "../../middlewares/jwtTokenCreation.js";
 const router = Router();
 
@@ -27,7 +27,7 @@ router.post("/", async (req, res) => {
     }
 
     const userData = await accountsModel.findOne({
-      isactive: CONTENT_STATE.IS_ACTIVE,
+      isactive: constants.CONTENT_STATE.IS_ACTIVE,
       verify_status: VERIFY_STATUS.APPROVED,
       $or: [{ email: username }, { phone: username }],
     });

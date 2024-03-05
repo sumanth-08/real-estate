@@ -2,7 +2,7 @@ import { Router } from "express";
 import { send } from "../../../helper/responseHelper.js";
 import RESPONSE from "../../../configs/global.js";
 import accountsModel from "../../../models/accountsModel.js";
-import { CONTENT_STATE, ROLE } from "../../../configs/constants.js";
+import constants from "../../../configs/constants.js";
 import authenticate from "../../../middlewares/authenticate.js";
 const router = Router();
 
@@ -23,8 +23,8 @@ router.get("/", authenticate, async (req, res) => {
 
     pipeline.push({
       $match: {
-        isactive: CONTENT_STATE.IS_ACTIVE,
-        role: ROLE.VENDOR,
+        isactive: constants.CONTENT_STATE.IS_ACTIVE,
+        role: constants.ROLE.VENDOR,
       },
     });
 

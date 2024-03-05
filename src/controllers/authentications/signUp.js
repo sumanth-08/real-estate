@@ -3,12 +3,7 @@ import { send, setErrorResponseMsg } from "../../helper/responseHelper.js";
 import RESPONSE from "../../configs/global.js";
 import accountsModel from "../../models/accountsModel.js";
 import bcrypt from "bcrypt";
-import {
-  SALTROUND,
-  ROLE,
-  CONTENT_STATE,
-  VERIFY_STATUS,
-} from "../../configs/constants.js";
+import constants from "../../configs/constants.js";
 import jwtTokenCreation from "../../middlewares/jwtTokenCreation.js";
 const router = Router();
 
@@ -112,7 +107,7 @@ router.post("/", async (req, res) => {
     }
     const phoneAlreadyExist = await accountsModel.findOne({
       phone: phone,
-      isactive: CONTENT_STATE.IS_ACTIVE,
+      isactive: constants.CONTENT_STATE.IS_ACTIVE,
     });
     if (phoneAlreadyExist) {
       const updated_response = setErrorResponseMsg(
@@ -124,16 +119,21 @@ router.post("/", async (req, res) => {
 
     const userData = await accountsModel.create({
       name: name,
-      role: role == ROLE.VENDOR ? ROLE.VENDOR : ROLE.CUSTOMER,
+      role:
+        role == constants.ROLE.VENDOR
+          ? constants.ROLE.VENDOR
+          : constants.ROLE.CUSTOMER,
       email: email,
       phone: phone,
       password: await bcrypt.hash(password, SALTROUND),
       verify_status:
-        role == ROLE.VENDOR ? VERIFY_STATUS.PENDING : VERIFY_STATUS.APPROVED,
+        role == constants.ROLE.VENDOR
+          ? VERIFY_STATUS.PENDING
+          : VERIFY_STATUS.APPROVED,
     });
 
     let token = null;
-    if (role != ROLE.VENDOR) {
+    if (role != constants.ROLE.VENDOR) {
       token = await jwtTokenCreation(
         userData._id,
         userData.role,
