@@ -23,6 +23,10 @@ const RESPONSE = {
     code: 205,
     message: "You didn't have permission to access this API",
   },
+  NEED_TO_VERIFY: {
+    code: 206,
+    message: "Your account need to verification & It's takes some time",
+  },
   TOKEN_REQUIRED: {
     code: 400,
     message: "Authentication token is required",

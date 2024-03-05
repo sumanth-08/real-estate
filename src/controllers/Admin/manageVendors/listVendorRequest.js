@@ -8,7 +8,7 @@ const router = Router();
 
 router.get("/", authenticate, async (req, res) => {
   try {
-    if (req.user.role != ROLE.ADMIN) {
+    if (req.user.role != constants.ROLE.ADMIN) {
       return send(res, RESPONSE.NO_ACCESS);
     }
     // let query = {};
@@ -20,6 +20,7 @@ router.get("/", authenticate, async (req, res) => {
     // let data = await accountsModel.find(query);
 
     let pipeline = [];
+    pipeline.push({ $sort: { created_at: -1 } });
 
     pipeline.push({
       $match: {
@@ -48,6 +49,7 @@ router.get("/", authenticate, async (req, res) => {
     }));
     return send(res, RESPONSE.SUCCESS, data);
   } catch (err) {
+    console.log(err.message);
     return send(res, RESPONSE.UNKNOWN_ERROR);
   }
 });

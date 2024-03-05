@@ -96,7 +96,7 @@ router.post("/", async (req, res) => {
 
     const emailAlreadyExist = await accountsModel.findOne({
       email: email,
-      isactive: CONTENT_STATE.IS_ACTIVE,
+      isactive: constants.CONTENT_STATE.IS_ACTIVE,
     });
     if (emailAlreadyExist) {
       const updated_response = setErrorResponseMsg(
@@ -125,11 +125,11 @@ router.post("/", async (req, res) => {
           : constants.ROLE.CUSTOMER,
       email: email,
       phone: phone,
-      password: await bcrypt.hash(password, SALTROUND),
+      password: await bcrypt.hash(password, constants.SALTROUND),
       verify_status:
         role == constants.ROLE.VENDOR
-          ? VERIFY_STATUS.PENDING
-          : VERIFY_STATUS.APPROVED,
+          ? constants.VERIFY_STATUS.PENDING
+          : constants.VERIFY_STATUS.APPROVED,
     });
 
     let token = null;

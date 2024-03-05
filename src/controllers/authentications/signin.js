@@ -28,9 +28,13 @@ router.post("/", async (req, res) => {
 
     const userData = await accountsModel.findOne({
       isactive: constants.CONTENT_STATE.IS_ACTIVE,
-      verify_status: VERIFY_STATUS.APPROVED,
+      // verify_status: constants.VERIFY_STATUS.APPROVED,
       $or: [{ email: username }, { phone: username }],
     });
+
+    if (userData.verify_status != constants.VERIFY_STATUS.APPROVED) {
+      return send(res, RESPONSE.NEED_TO_VERIFY);
+    }
 
     if (userData && (await bcrypt.compare(password, userData.password))) {
       const token = await jwtTokenCreation(

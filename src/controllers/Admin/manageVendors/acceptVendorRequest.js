@@ -8,7 +8,7 @@ const router = Router();
 
 router.put("/", authenticate, async (req, res) => {
   try {
-    if (req.user.role != ROLE.ADMIN) {
+    if (req.user.role != constants.ROLE.ADMIN) {
       return send(res, RESPONSE.NO_ACCESS);
     }
 
