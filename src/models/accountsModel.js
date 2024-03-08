@@ -31,8 +31,8 @@ const accountModel = mongoose.Schema({
   },
   created_at: {
     type: Date,
-    default: new Date(),
-  }
+    required: true,
+  },
 });
 
 export default mongoose.model("accounts", accountModel);

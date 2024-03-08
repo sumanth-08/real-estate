@@ -130,6 +130,7 @@ router.post("/", async (req, res) => {
         role == constants.ROLE.VENDOR
           ? constants.VERIFY_STATUS.PENDING
           : constants.VERIFY_STATUS.APPROVED,
+      created_at: new Date().getTime(),
     });
 
     let token = null;
