@@ -27,11 +27,11 @@ const propertyModel = new Schema({
     type: Number,
     default: false,
   },
-  // images: {
-  //   data: Buffer,
-  //   type: String,
-  //   required: true,
-  // },
+  images: {
+    data: Buffer,
+    type: [String],
+    required: true,
+  },
   description: {
     type: String,
     required: false,

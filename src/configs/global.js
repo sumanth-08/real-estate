@@ -27,6 +27,10 @@ const RESPONSE = {
     code: 206,
     message: "Your account need to verification & It's takes some time",
   },
+  MULTER_ERROR: {
+    code: 207,
+    message: "",
+  },
   TOKEN_REQUIRED: {
     code: 400,
     message: "Authentication token is required",
