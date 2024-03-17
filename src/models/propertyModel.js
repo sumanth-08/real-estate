@@ -17,21 +17,21 @@ const propertyModel = new Schema({
   },
   bedrooms: {
     type: Number,
-    required: flase,
+    default: false,
   },
   balconies: {
     type: Number,
-    required: flase,
+    default: false,
   },
   bathrooms: {
     type: Number,
-    required: false,
+    default: false,
   },
-  images: {
-    data: Buffer,
-    type: String,
-    required: true,
-  },
+  // images: {
+  //   data: Buffer,
+  //   type: String,
+  //   required: true,
+  // },
   description: {
     type: String,
     required: false,
@@ -46,11 +46,11 @@ const propertyModel = new Schema({
   },
   lift: {
     type: Number,
-    required: false,
+    default: false,
   },
   parking: {
     type: Number,
-    required: false,
+    default: false,
   },
   age: {
     type: String,
@@ -64,13 +64,13 @@ const propertyModel = new Schema({
     type: Number,
     required: true,
   },
-  deposite: {
+  deposit: {
     type: Number,
-    required: false,
+    default: false,
   },
   pay_on_month: {
     type: Number,
-    required: true,
+    default: false,
   },
   isactive: {
     type: Number,
