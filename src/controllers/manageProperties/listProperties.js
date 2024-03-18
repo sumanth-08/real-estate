@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { send, setErrorResponseMsg } from "../../../helper/responseHelper.js";
-import RESPONSE from "../../../configs/global.js";
-import authenticate from "../../../middlewares/authenticate.js";
-import constants from "../../../configs/constants.js";
-import propertyModel from "../../../models/propertyModel.js";
+import { send, setErrorResponseMsg } from "../../helper/responseHelper.js";
+import RESPONSE from "../../configs/global.js";
+import authenticate from "../../middlewares/authenticate.js";
+import constants from "../../configs/constants.js";
+import propertyModel from "../../models/propertyModel.js";
 import moments from "moment";
 const router = Router();
 

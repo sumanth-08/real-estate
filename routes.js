@@ -3,7 +3,7 @@ import authenticateApiHandler from "./src/controllers/authentications/apiHandler
 import adminApiHandler from "./src/controllers/admin/manageVendors/apiHandler.js";
 import catApiHandler from "./src/controllers/admin/manageCategory/apiHandler.js";
 import subcategory from "./src/controllers/admin/manageSubCategory/apiHandler.js";
-import propertyManage from "./src/controllers/vendors/manageProperties/apiHandler.js";
+import propertyManage from "./src/controllers/manageProperties/apiHandler.js";
 
 const router = (app) => {
   app.use(express.json());

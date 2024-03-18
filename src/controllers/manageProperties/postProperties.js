@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { send, setErrorResponseMsg } from "../../../helper/responseHelper.js";
-import RESPONSE from "../../../configs/global.js";
-import authenticate from "../../../middlewares/authenticate.js";
-import constants from "../../../configs/constants.js";
-import propertyModel from "../../../models/propertyModel.js";
-import subCatModel from "../../../models/subCatModel.js";
-import uploads from "../../../middlewares/uploads.js";
+import { send, setErrorResponseMsg } from "../../helper/responseHelper.js";
+import RESPONSE from "../../configs/global.js";
+import authenticate from "../../middlewares/authenticate.js";
+import constants from "../../configs/constants.js";
+import propertyModel from "../../models/propertyModel.js";
+import subCatModel from "../../models/subCatModel.js";
+import uploads from "../../middlewares/uploads.js";
 import multer from "multer";
-import s3Upload from "../../../middlewares/s3Uploads.js";
+import s3Upload from "../../middlewares/s3Uploads.js";
 const assetUpload = uploads.array("images", 5);
 const router = Router();
 

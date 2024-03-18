@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { send, setErrorResponseMsg } from "../../../helper/responseHelper.js";
-import RESPONSE from "../../../configs/global.js";
-import authenticate from "../../../middlewares/authenticate.js";
-import propertyModel from "../../../models/propertyModel.js";
-import constants from "../../../configs/constants.js";
+import { send, setErrorResponseMsg } from "../../helper/responseHelper.js";
+import RESPONSE from "../../configs/global.js";
+import authenticate from "../../middlewares/authenticate.js";
+import propertyModel from "../../models/propertyModel.js";
+import constants from "../../configs/constants.js";
 const router = Router();
 
 router.delete("/:id", authenticate, async (req, res) => {
