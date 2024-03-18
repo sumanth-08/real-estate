@@ -9,10 +9,28 @@ const router = Router();
 
 router.get("/", authenticate, async (req, res) => {
   try {
+    const vendor_id =
+      req.user.role == constants.ROLE.VENDOR
+        ? req.user.id
+        : req.query.vendor_id;
+
+    if (
+      (req.user.role == constants.ROLE.ADMIN && vendor_id == "") ||
+      !vendor_id
+    ) {
+      const updatedResponse = setErrorResponseMsg(
+        RESPONSE.REQUIRED_PARAMS,
+        "Vendor_id"
+      );
+      return send(res, updatedResponse);
+    }
+    
     let data = await propertyModel.aggregate([
       {
         $match: {
-          $expr: { $eq: ["$listedby", { $toObjectId: req.user.id }] },
+          $expr: {
+            $eq: ["$listedby", { $toObjectId: vendor_id }],
+          },
           isactive: constants.CONTENT_STATE.IS_ACTIVE,
         },
       },
@@ -38,6 +56,9 @@ router.get("/", authenticate, async (req, res) => {
       {
         $unwind: "$subcategoryInfo",
       },
+      {
+        $sort: { posted_on: -1 },
+      },
     ]);
 
     data = data.map((itm) => {
@@ -50,7 +71,7 @@ router.get("/", authenticate, async (req, res) => {
         balconies: itm.balconies,
         bathrooms: itm.bathrooms,
         description: itm.description,
-        posted_on: moments(itm.posted_on).format('LL'),
+        posted_on: moments(itm.posted_on).format("LL"),
         prop_status: itm.prop_status,
         lift: itm.lift,
         parking: itm.parking,
