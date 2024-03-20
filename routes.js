@@ -5,6 +5,7 @@ import catApiHandler from "./src/controllers/admin/manageCategory/apiHandler.js"
 import subcategory from "./src/controllers/admin/manageSubCategory/apiHandler.js";
 import propertyManage from "./src/controllers/manageProperties/apiHandler.js";
 import comments from "./src/controllers/comments/apiHandler.js";
+import users from "./src/controllers/users/apiHandler.js";
 
 const router = (app) => {
   app.use(express.json());
@@ -14,6 +15,7 @@ const router = (app) => {
   app.use("/api/subcategory", subcategory);
   app.use("/api/properties", propertyManage);
   app.use("/api/comments", comments);
+  app.use("/api/user", users);
 };
 
 export default router;
