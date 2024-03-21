@@ -5,7 +5,9 @@ dotenv.config();
 const PORT = process.env.PORT || 9291;
 import router from "./routes.js";
 import getConnection from "./src/helper/databaseConnection.js";
+import cors from "cors";
 
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 getConnection()
