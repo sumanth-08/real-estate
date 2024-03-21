@@ -32,7 +32,7 @@ router.post("/", async (req, res) => {
       $or: [{ email: username }, { phone: username }],
     });
 
-    if (userData.verify_status != constants.VERIFY_STATUS.APPROVED) {
+    if (userData && userData.verify_status != constants.VERIFY_STATUS.APPROVED) {
       return send(res, RESPONSE.NEED_TO_VERIFY);
     }
 
