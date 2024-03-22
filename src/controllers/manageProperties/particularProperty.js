@@ -50,6 +50,17 @@ router.get("/", async (req, res) => {
       {
         $unwind: "$subcategoryInfo",
       },
+      {
+        $lookup: {
+          from: "accounts",
+          localField: "listedby",
+          foreignField: "_id",
+          as: "listedby",
+        },
+      },
+      {
+        $unwind: "$listedby",
+      },
       // {
       //   $sort: { posted_on: -1 },
       // },
@@ -85,6 +96,12 @@ router.get("/", async (req, res) => {
           _id: itm.subcategoryInfo._id,
           name: itm.subcategoryInfo.name,
         },
+        listedby: {
+          _id: itm.listedby._id,
+          name: itm.listedby.name,
+          email: itm.listedby.email,
+          phoen: itm.listedby.phone
+        }
       };
     });
 
