@@ -9,13 +9,32 @@ const router = Router();
 router.get("/", async (req, res) => {
   try {
     let query = {};
+    const prop_status = parseInt(req.query.prop_status);
+    const { cattegory_id, subcat_id } = req.query;
+
+    if (!cattegory_id || cattegory_id == undefined) {
+      const updatedResponse = setErrorResponseMsg(
+        RESPONSE.REQUIRED_PARAMS,
+        "cattegory_id"
+      );
+      return send(res, updatedResponse);
+    }
+    if (!subcat_id || subcat_id == undefined) {
+      const updatedResponse = setErrorResponseMsg(
+        RESPONSE.REQUIRED_PARAMS,
+        "subcat_id"
+      );
+      return send(res, updatedResponse);
+    }
 
     query.isactive = constants.CONTENT_STATE.IS_ACTIVE;
-    query.$and = [
-      { property_name: { $regex: req.query.property_name, $options: "i" } },
-      { city: { $regex: req.query.city, $options: "i" } },
-      { locality: { $regex: req.query.locality, $options: "i" } },
-    ];
+    if (prop_status) query.prop_status = prop_status;
+    query.$expr = {
+      $and: {
+        $eq: ["$category", { $toObjectId: cattegory_id }],
+        $eq: ["$subcategory", { $toObjectId: subcat_id }],
+      },
+    };
 
     let data = await propertyModel.aggregate([
       {

@@ -6,6 +6,7 @@ import particularProperty from "./particularProperty.js";
 import editProperty from "./editProperty.js";
 import changeStatus from "./changeStatus.js";
 import searchAndFilter from "./searchAndFilter.js";
+import listByCategory from "./listByCategory.js";
 const router = Router();
 
 router.use("/manage/post", postProperties);
@@ -15,5 +16,6 @@ router.use("/manage/list/particular", particularProperty);
 router.use("/manage/edit", editProperty);
 router.use("/manage/edit/status", changeStatus);
 router.use("/seach/filter", searchAndFilter);
+router.use("/list/bycat", listByCategory);
 
 export default router;
