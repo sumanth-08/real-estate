@@ -14,6 +14,8 @@ router.get("/", authenticate, async (req, res) => {
         ? req.user.id
         : req.query.vendor_id;
 
+    const prop_status = parseInt(req.query.prop_status);
+
     if (
       (req.user.role == constants.ROLE.ADMIN && vendor_id == "") ||
       !vendor_id
@@ -24,15 +26,16 @@ router.get("/", authenticate, async (req, res) => {
       );
       return send(res, updatedResponse);
     }
-    
+    let query = {};
+    (query.$expr = {
+      $eq: ["$listedby", { $toObjectId: vendor_id }],
+    }),
+      (query.isactive = constants.CONTENT_STATE.IS_ACTIVE);
+    if (prop_status) query.prop_status = prop_status;
+
     let data = await propertyModel.aggregate([
       {
-        $match: {
-          $expr: {
-            $eq: ["$listedby", { $toObjectId: vendor_id }],
-          },
-          isactive: constants.CONTENT_STATE.IS_ACTIVE,
-        },
+        $match: query,
       },
       {
         $lookup: {
