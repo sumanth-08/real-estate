@@ -50,9 +50,9 @@ router.get("/", async (req, res) => {
       {
         $unwind: "$subcategoryInfo",
       },
-      //   {
-      //     $sort: { posted_on: -1 },
-      //   },
+      // {
+      //   $sort: { posted_on: -1 },
+      // },
     ]);
 
     data = data.map((itm) => {
