@@ -31,6 +31,10 @@ const RESPONSE = {
     code: 207,
     message: "",
   },
+  READY_TO_BOOK: {
+    code: 208,
+    message: "Only Ready to Buy Properties can Book!",
+  },
   TOKEN_REQUIRED: {
     code: 400,
     message: "Authentication token is required",
