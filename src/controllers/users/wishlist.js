@@ -21,6 +21,25 @@ router.post("/", authenticate, async (req, res) => {
       return send(res, updatedResponse);
     }
 
+    let wishlistData = await wishlist.aggregate([
+      {
+        $match: {
+          $and: [
+            { $expr: { $eq: ["$property_id", { $toObjectId: property_id }] } },
+            { $expr: { $eq: ["$user_id", { $toObjectId: req.user.id }] } },
+            { isactive: constants.CONTENT_STATE.IS_ACTIVE },
+          ],
+        },
+      },
+    ]);
+    if (wishlistData.length) {
+      const updatedResponse = setErrorResponseMsg(
+        RESPONSE.ALREADY_EXIST,
+        "Wishlist"
+      );
+      return send(res, updatedResponse);
+    }
+
     await wishlist.create({
       user_id: req.user.id,
       property_id: property_id,
@@ -28,6 +47,7 @@ router.post("/", authenticate, async (req, res) => {
 
     return send(res, RESPONSE.SUCCESS);
   } catch (err) {
+    console.log(err.message);
     return send(res, RESPONSE.UNKNOWN_ERROR);
   }
 });
