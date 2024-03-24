@@ -17,6 +17,19 @@ const bookingsModel = new Schema({
     ref: "properties",
     required: true,
   },
+  vendor_id: {
+    type: Schema.Types.ObjectId,
+    ref: "accounts",
+    required: true,
+  },
+  booked_on: {
+    type: Date,
+    required: true,
+  },
+  isaccepted: {
+    type: Number,
+    default: 0,
+  },
 });
 
 export default mongoose.model("bookings", bookingsModel);

@@ -54,6 +54,8 @@ router.post("/", authenticate, async (req, res) => {
       await bookings.create({
         user_id: req.user.id,
         property_id: property_id,
+        vendor_id: propData[0].listedby,
+        booked_on: new Date(),
       });
     } else {
       return send(res, RESPONSE.READY_TO_BOOK);
