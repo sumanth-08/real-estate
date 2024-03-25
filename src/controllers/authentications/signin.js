@@ -39,6 +39,7 @@ router.post("/", async (req, res) => {
     if (userData && (await bcrypt.compare(password, userData.password))) {
       const token = await jwtTokenCreation(
         userData._id,
+        userData.name,
         userData.role,
         userData.email,
         userData.phone

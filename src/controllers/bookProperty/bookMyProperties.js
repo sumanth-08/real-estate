@@ -5,6 +5,7 @@ import authenticate from "../../middlewares/authenticate.js";
 import bookings from "../../models/bookings.js";
 import property from "../../models/propertyModel.js";
 import constants from "../../configs/constants.js";
+import sendMyMail from "../../middlewares/sendMail.js";
 const router = Router();
 
 router.post("/", authenticate, async (req, res) => {
@@ -51,12 +52,19 @@ router.post("/", authenticate, async (req, res) => {
     ]);
 
     if (propData.length) {
+      // dao
       await bookings.create({
         user_id: req.user.id,
         property_id: property_id,
         vendor_id: propData[0].listedby,
         booked_on: new Date(),
       });
+
+      // mail
+      let subject = "Property is Booked! 🏡";
+      let text = `${req.user.name} has Booked Your property ${propData[0].property_name}, Confirm in the Dashboard`;
+      let to = process.env.EMAIL;
+      await sendMyMail(to, subject, text);
     } else {
       return send(res, RESPONSE.READY_TO_BOOK);
     }

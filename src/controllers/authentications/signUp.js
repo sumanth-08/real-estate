@@ -137,6 +137,7 @@ router.post("/", async (req, res) => {
     if (role != constants.ROLE.VENDOR) {
       token = await jwtTokenCreation(
         userData._id,
+        userData.name,
         userData.role,
         userData.email,
         userData.phone
