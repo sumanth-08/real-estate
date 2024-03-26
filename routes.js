@@ -7,6 +7,7 @@ import propertyManage from "./src/controllers/manageProperties/apiHandler.js";
 import comments from "./src/controllers/comments/apiHandler.js";
 import users from "./src/controllers/users/apiHandler.js";
 import bookings from "./src/controllers/bookProperty/apiHandler.js";
+import analysis from "./src/controllers/admin/analysis/apiHandler.js";
 
 const router = (app) => {
   app.use(express.json());
@@ -18,6 +19,7 @@ const router = (app) => {
   app.use("/api/comments", comments);
   app.use("/api/user", users);
   app.use("/api/property", bookings);
+  app.use("/api/project", analysis);
 };
 
 export default router;
