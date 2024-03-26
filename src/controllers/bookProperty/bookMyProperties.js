@@ -4,6 +4,7 @@ import { send, setErrorResponseMsg } from "../../helper/responseHelper.js";
 import authenticate from "../../middlewares/authenticate.js";
 import bookings from "../../models/bookings.js";
 import property from "../../models/propertyModel.js";
+import accounts from "../../models/accountsModel.js";
 import constants from "../../configs/constants.js";
 import sendMyMail from "../../middlewares/sendMail.js";
 const router = Router();
@@ -51,6 +52,14 @@ router.post("/", authenticate, async (req, res) => {
       },
     ]);
 
+    let userData = await accounts.aggregate([
+      {
+        $match: {
+          $expr: { $eq: ["$_id", { $toObjectId: propData[0].listedby }] },
+        },
+      },
+    ]);
+
     if (propData.length) {
       // dao
       await bookings.create({
@@ -63,7 +72,7 @@ router.post("/", authenticate, async (req, res) => {
       // mail
       let subject = "Property is Booked! 🏡";
       let text = `${req.user.name} has Booked Your property ${propData[0].property_name}, Confirm in the Dashboard`;
-      let to = process.env.EMAIL;
+      let to = userData[0].email;
       await sendMyMail(to, subject, text);
     } else {
       return send(res, RESPONSE.READY_TO_BOOK);
